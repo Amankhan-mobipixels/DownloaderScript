@@ -1,12 +1,9 @@
-package com.example.projectsample;
+package com.abdellatif.youtubedl_android;
 
 import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.abdellatif.ffmpeg.FFmpeg;
-import com.abdellatif.youtubedl_android.YoutubeDL;
-import com.abdellatif.youtubedl_android.YoutubeDLException;
 
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -57,6 +54,5 @@ public class App extends Application {
 
     private void initLibraries() throws YoutubeDLException {
         YoutubeDL.getInstance().init(this);
-        FFmpeg.getInstance().init(this);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.projectsample;
+package com.abdellatif.youtubedl_android;
 
 import android.content.Context;
 import android.os.Environment;
@@ -20,15 +20,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class Startscript {
 
-     void startDownload(Context context, String url, ProgressBar circular, ProgressBar progressBar, CompositeDisposable compositeDisposable, DownloadProgressCallback callback) {
-        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File youtubeDLDir = new File(downloadsDir, "test");
-        if (!youtubeDLDir.exists()) youtubeDLDir.mkdir();
+     public void startDownload(Context context, String url, ProgressBar circular, ProgressBar progressBar, CompositeDisposable compositeDisposable,File  filePAth,DownloadProgressCallback callback) {
+        if (!filePAth.exists()) filePAth.mkdir();
 
         YoutubeDLRequest request = new YoutubeDLRequest(url);
         request.addOption("--no-mtime");
         request.addOption("-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best");
-        request.addOption("-o", youtubeDLDir.getAbsolutePath() + "/%(title)s.%(ext)s");
+        request.addOption("-o", filePAth.getAbsolutePath() + "/%(title)s.%(ext)s");
          circular.setVisibility(View.VISIBLE);
         Disposable disposable = Observable.fromCallable(() -> YoutubeDL.getInstance().execute(request, callback))
                 .subscribeOn(Schedulers.newThread())
