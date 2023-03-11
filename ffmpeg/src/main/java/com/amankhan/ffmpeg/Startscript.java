@@ -18,7 +18,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class Startscript {
 
-     public void startDownload(Context context,String name, String url, Dialog loadingDialog, Dialog progressDialog, CompositeDisposable compositeDisposable, File  filePAth, DownloadProgressCallback callback) {
+     public void startDownload(Context context,String name, String url,String failedText,String SuccessText,Dialog loadingDialog, Dialog progressDialog, CompositeDisposable compositeDisposable, File  filePAth, DownloadProgressCallback callback) {
         if (!filePAth.exists()) filePAth.mkdir();
 
         YoutubeDLRequest request = new YoutubeDLRequest(url);
@@ -31,12 +31,12 @@ public class Startscript {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(youtubeDLResponse -> {
                     progressDialog.dismiss();
-                    Toast.makeText(context, "Download successful", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, SuccessText, Toast.LENGTH_LONG).show();
                 }, e -> {
                     loadingDialog.dismiss();
                     progressDialog.dismiss();
                     //Toast.makeText(DownloadingExampleActivity.this, "download failed", Toast.LENGTH_LONG).show();
-                    Toast.makeText(context, "Download failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, failedText, Toast.LENGTH_LONG).show();
                 });
         compositeDisposable.add(disposable);
 
