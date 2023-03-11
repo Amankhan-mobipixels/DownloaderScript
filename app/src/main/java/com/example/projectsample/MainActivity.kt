@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             loadingDialog()
             progressDialog()
             val start = com.amankhan.ffmpeg.Startscript()
-            start.startDownload(this,"hello1234",binding.link.text.toString(),loadingDialog,progressDialog,compositeDisposable,File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"test"),callback)
+            start.startDownload(this,"hello1234",binding.link.text.toString(),"success","failed",loadingDialog,progressDialog,compositeDisposable,File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"test"),callback)
         }
     }
     fun progressDialog() {
