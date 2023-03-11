@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'maven-publish'
 android {
     compileSdkVersion 32
 
@@ -20,6 +20,19 @@ android {
         }
     }
 
+}
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.Amankhan-mobipixels'
+                artifactId = 'ffmpeg'
+                version = '1.0.0'
+            }
+        }
+    }
 }
 
 dependencies {
