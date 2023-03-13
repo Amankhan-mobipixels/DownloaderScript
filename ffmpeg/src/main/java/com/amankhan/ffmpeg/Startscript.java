@@ -18,25 +18,21 @@ import io.reactivex.schedulers.Schedulers;
 
 public class Startscript {
 
-     public void startDownload(Context context,String name, String url,String failedText,String SuccessText,Dialog loadingDialog, Dialog progressDialog, CompositeDisposable compositeDisposable, File  filePAth, DownloadProgressCallback callback) {
+     public void startDownload(String name, String url,CompositeDisposable compositeDisposable,File filePAth, DownloadProgressCallback callback,DownloadCompleteNotifier notify) {
         if (!filePAth.exists()) filePAth.mkdir();
 
         YoutubeDLRequest request = new YoutubeDLRequest(url);
         request.addOption("--no-mtime");
         request.addOption("-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best");
 //        request.addOption("-o", filePAth.getAbsolutePath() + "/%(title)s.%(ext)s");
-        request.addOption("-o", filePAth.getAbsolutePath() + "/"+name+".%(ext)s");
+        request.addOption("-o", filePAth.getAbsolutePath() + "/"+name+".mp4");
         Disposable disposable = Observable.fromCallable(() -> YoutubeDL.getInstance().execute(request, callback))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(youtubeDLResponse -> {
-                    progressDialog.dismiss();
-                    Toast.makeText(context, SuccessText, Toast.LENGTH_LONG).show();
+                    notify.onProgressUpdate(true);
                 }, e -> {
-                    loadingDialog.dismiss();
-                    progressDialog.dismiss();
-                    //Toast.makeText(DownloadingExampleActivity.this, "download failed", Toast.LENGTH_LONG).show();
-                    Toast.makeText(context, failedText, Toast.LENGTH_LONG).show();
+                    notify.onProgressUpdate(false);
                 });
         compositeDisposable.add(disposable);
 
