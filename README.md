@@ -11,6 +11,7 @@ SnackVideo
 ShareChat
 Likee
 Moj
+Vimeo
 
 ````
 Code
